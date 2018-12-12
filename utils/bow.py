@@ -26,7 +26,8 @@ class BOW(object):
         print('Create Bag Of Words ...')
         self.tokenizer = Tokenizer(self.num_words, lower=False) # 不改变大小写（需提前预处理）
         self.tokenizer.fit_on_texts(docs)
-        print("Get Unique Words In Corpus: %s" % len(self.tokenizer.word_index))
+        self.word_index = self.tokenizer.word_index
+        print("Get Unique Words In Corpus: %s" % len(self.word_index))
         return self
 
     def transform(self, docs):
