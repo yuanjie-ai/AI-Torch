@@ -1,11 +1,9 @@
 class PretrainedWordEmbedding(object):
-    def __init__(self, fname, maxlen, word_index):
+    def __init__(self, fname, word_index):
         """
         :param fname: 词向量路径
-        :param maxlen: 句序列最大长度
-        :param word_index: KerasBow().tokenizer.word_index
+        :param word_index: Bow().word_index
         """
-        self.maxlen = maxlen
         self.word_index = word_index
         self.embeddings_index, self.embeddings_dim = self._load_wv(fname)
 
