@@ -9,7 +9,7 @@ class PretrainedWordEmbedding(object):
 
     @property
     def embedding_matrix(self):
-        print('Get Keras Embedding Layer ...')
+        print('Embedding Matrix ...')
         # prepare embedding matrix
         num_words = len(self.word_index) + 1  # 未出现的词标记0
         embedding_matrix = np.zeros((num_words, self.embeddings_dim))
