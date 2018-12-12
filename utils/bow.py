@@ -3,7 +3,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 
 
-class KerasBow(object):
+class BOW(object):
     """doc
     词袋模型：我们可以为数据集中的所有单词制作一张词表，然后将每个单词和一个唯一的索引关联。
     每个句子都是由一串数字组成，这串数字是词表中的独立单词对应的个数。
