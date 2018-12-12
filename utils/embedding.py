@@ -24,7 +24,7 @@ class PretrainedWordEmbedding(object):
         
     def _load_wv(self, fname):
         try:
-            import gensimxx
+            import gensim
             print('Load Word Vectors By gensim ...')
             model = gensim.models.KeyedVectors.load_word2vec_format(fname)
             return model, model.vector_size
