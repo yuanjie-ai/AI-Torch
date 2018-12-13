@@ -1,0 +1,23 @@
+s5: >-
+  https://www.cnblogs.com/BlueSkyyj/p/8143826.html
+  
+a: >-
+   2017-07-31
+# time1: 2001-12-14t21:59:43.10-05:00
+# date: 2017-07-31
+null: ~
+bool: [true, false]
+int: 1
+float: 1.0
+list: [a, 1]
+list_:
+- a
+- 1
+dict: { a: 1, b: b }
+dict_:
+    a: 1
+    b: b
+    
+
+int_to_str: !!str 123  #{'bool_to_str': 'true'}
+bool_to_str: !!str true #{'bool_to_str': 'true'}
