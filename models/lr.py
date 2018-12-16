@@ -43,3 +43,6 @@ for e in bar_epochs:
                 f"Epoch {e}:"
                 f"Loss: {loss.data.numpy():.5f} | "
                 f"Auc: {auc(b_y.numpy(), output.data.numpy()[:, 1]):.5}")
+
+_net = net.eval()
+auc(y, _net(t_X).data.numpy()[:, 1])
