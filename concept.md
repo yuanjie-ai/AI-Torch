@@ -2,7 +2,7 @@
 import torch.nn.functional as F
 
 input = torch.Tensor([[[1,2,3,4,5,6,7]]])
-F.avg_pool1d(input, kernel_size=3, stride=2, ceil_mode=True)
+F.avg_pool1d(input, kernel_size=3, stride=2, ceil_mode=True)  # 默认stride = kernel_size
 
 dim = (input.shape[-1] - kernel_size)/stride + 1
 ceil_mode = True
