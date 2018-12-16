@@ -10,10 +10,11 @@ class LogsticRegression(nn.Module):
     def __init__(self, in_dim, n_class):
         super().__init__()
         self.logstic = nn.Linear(in_dim, n_class)
- 
+
     def forward(self, x):
         out = self.logstic(x)
         return F.softmax(out, -1)
+
 
 epochs = 5
 batch_size = 128
@@ -41,5 +42,4 @@ for e in bar_epochs:
             t.set_description(
                 f"Epoch {e}:"
                 f"Loss: {loss.data.numpy():.5f} | "
-                f"Auc: {auc(b_y.numpy(), output.data.numpy()[:, 1]):.5}"
-            )
+                f"Auc: {auc(b_y.numpy(), output.data.numpy()[:, 1]):.5}")
