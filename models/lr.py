@@ -9,11 +9,14 @@ from sklearn.datasets import make_classification
 class LogsticRegression(nn.Module):
     def __init__(self, in_dim, n_class):
         super().__init__()
-        self.logstic = nn.Linear(in_dim, n_class)
+        self.fc1 = nn.Linear(in_dim, in_dim // 2)
+        self.fc2 = nn.Linear(in_dim // 2, n_class)
 
     def forward(self, x):
-        out = self.logstic(x)
-        return F.softmax(out, -1)
+        x = F.relu(self.fc1(x))
+        x = self.fc2(x)
+        # return x
+        return F.softmax(x, 1)
 
 
 epochs = 5
@@ -34,7 +37,9 @@ for e in bar_epochs:
         b_X = t_X[b:b + batch_size]
         b_y = t_y[b:b + batch_size]
         output = net(b_X)  # rnn output
-        loss = loss_func(output, b_y.long().view(-1))  # cross entropy loss and y is not one-hotted
+        loss = loss_func(
+            output,
+            b_y.long().view(-1))  # cross entropy loss and y is not one-hotted
         optimizer.zero_grad()  # clear gradients for this training step
         loss.backward()  # backpropagation, compute gradients
         optimizer.step()
@@ -45,4 +50,4 @@ for e in bar_epochs:
                 f"Auc: {auc(b_y.numpy(), output.data.numpy()[:, 1]):.5}")
 
 _net = net.eval()
-auc(y, _net(t_X).data.numpy()[:, 1])
+auc(y, _net(t_X).data.numpy()[:, -1])
