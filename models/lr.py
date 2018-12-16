@@ -34,7 +34,7 @@ for e in bar_epochs:
         b_X = t_X[b:b + batch_size]
         b_y = t_y[b:b + batch_size]
         output = net(b_X)  # rnn output
-        loss = loss_func(output, b_y.long())  # cross entropy loss
+        loss = loss_func(output, b_y.long().view(-1))  # cross entropy loss and y is not one-hotted
         optimizer.zero_grad()  # clear gradients for this training step
         loss.backward()  # backpropagation, compute gradients
         optimizer.step()
