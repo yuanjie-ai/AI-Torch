@@ -4,6 +4,7 @@ import torch.nn.functional as F
 
 
 class Config(object):
+    """https://www.itcodemonkey.com/article/9008.html"""
     # Data
     class_num = 2
 
