@@ -1,15 +1,25 @@
-def fit(model, epochs=5, batch_size=128, loss_func=torch.nn.CrossEntropyLoss, optimizer=torch.optim.Adam):
+def fit(model, X, y, epochs=5, batch_size=128, loss_func=torch.nn.CrossEntropyLoss, optimizer=torch.optim.Adam):
+    """
+    :param model:
+    :param X: torch.FloatTensor
+    :param y: torch.LongTensor
+    :param epochs:
+    :param batch_size:
+    :param loss_func:
+    :param optimizer:
+    :return:
+    """
     from tqdm import tqdm_notebook
     from sklearn.metrics import roc_auc_score as auc
     optimizer = optimizer(model.parameters())
     bar_epochs = tqdm_notebook(range(epochs))
     for e in bar_epochs:
         bar_epochs.set_description(f"Epoch {e}:")
-        t = tqdm_notebook(range(0, t_X.size(0), batch_size))
+        t = tqdm_notebook(range(0, X.size(0), batch_size))
         for b in t:  # for each training step
             # train your data...
-            b_X = t_X[b:b + batch_size]
-            b_y = t_y[b:b + batch_size]
+            b_X = X[b:b + batch_size]
+            b_y = y[b:b + batch_size]
             output = net(b_X)  # rnn output
             loss = loss_func(
                 output,
