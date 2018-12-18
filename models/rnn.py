@@ -53,6 +53,7 @@ class RNN(nn.Module):
         self.fc2 = nn.Linear(opt.rnn_hidden_size // 2, opt.class_num)
 
     def forward(self, x):
+        assert isinstance(x, torch.LongTensor)
         x = self.embed(x)  # x/r_out shape (batch, time_step, input_size)
         r_out, (h_n, c_n) = self.rnn(x)  # h_n/c_n shape (num_layers * num_directions,  batch_size,  hidden_size)
         # r_out[:, -1, :].equal(h_n[-1, :, :])
