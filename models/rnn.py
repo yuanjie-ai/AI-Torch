@@ -18,7 +18,7 @@ class Config(object):
 
     # RNN
     rnn_hidden_size = 128
-    rnn_layers_num = 2
+    rnn_layers_num = 3
     bidirectional = True
     rnn_dropout = 0
     
@@ -48,9 +48,10 @@ class RNN(nn.Module):
             bidirectional=opt.bidirectional,
             batch_first=True  # input/output shape (batch, time_step, input_size)
         )
-        self.fc1 = nn.Linear(opt.rnn_hidden_size * opt.rnn_layers_num,
-                             opt.rnn_hidden_size // 2)
-        self.fc2 = nn.Linear(opt.rnn_hidden_size // 2, opt.class_num)
+        __in_features = self.rnn.hidden_size * (2 if self.rnn.bidirectional else 1)
+        self.fc1 = nn.Linear(__in_features,
+                             __in_features // 2)
+        self.fc2 = nn.Linear(self.fc1.out_features, opt.class_num)
 
     def forward(self, x):
         assert isinstance(x, torch.LongTensor)
