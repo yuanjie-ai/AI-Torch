@@ -52,8 +52,8 @@ class BiLSTM(nn.Module):
         # x shape (batch, time_step, input_size)
         # r_out shape (batch, time_step, output_size)
         # h_n shape (n_layers, batch, hidden_size)
-        # h_c shape (n_layers, batch, hidden_size)
-        r_out, (h_n, h_c) = self.bilstm(x)
+        # c_n shape (n_layers, batch, hidden_size)
+        r_out, (h_n, c_n) = self.bilstm(x)
         r_out = F.relu(r_out)
 
         # r_out = F.max_pool1d(r_out, r_out.size(2)).squeeze(2)
