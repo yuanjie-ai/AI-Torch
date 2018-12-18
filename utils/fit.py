@@ -1,4 +1,4 @@
-def fit(model, X, y, epochs=5, batch_size=128, loss_func=torch.nn.CrossEntropyLoss, optimizer=torch.optim.Adam):
+def fit(model, X, y, epochs=5, batch_size=128, loss_func=torch.nn.CrossEntropyLoss()):
     """
     :param model:
     :param X: torch.FloatTensor
@@ -11,7 +11,8 @@ def fit(model, X, y, epochs=5, batch_size=128, loss_func=torch.nn.CrossEntropyLo
     """
     from tqdm import tqdm_notebook
     from sklearn.metrics import roc_auc_score as auc
-    optimizer = optimizer(model.parameters())
+    
+    optimizer = torch.optim.Adam(model.parameters())
     bar_epochs = tqdm_notebook(range(epochs))
     for e in bar_epochs:
         bar_epochs.set_description(f"Epoch {e}:")
@@ -23,7 +24,7 @@ def fit(model, X, y, epochs=5, batch_size=128, loss_func=torch.nn.CrossEntropyLo
             output = model(b_X)  # rnn output
             loss = loss_func(
                 output,
-                b_y.long().view(-1))  # cross entropy loss and y is not one-hotted
+                b_y)  # cross entropy loss and y is not one-hotted
             optimizer.zero_grad()  # clear gradients for this training step
             loss.backward()  # backpropagation, compute gradients
             optimizer.step()
