@@ -16,7 +16,7 @@ def train_desc(epoch, **kw):
                 bar_batchs.set_description(desc)
     """
     _ = ' ｜ '.join([f'{k.title()} = {v:.5f}' for k, v in kw.items()])
-    return f'Epoch {epoch: >2}: ' + _
+    return f'Epoch {epoch+1: >2}: ' + _
 
 
 
