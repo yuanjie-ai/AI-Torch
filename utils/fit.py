@@ -20,7 +20,7 @@ def fit(model, X, y, epochs=5, batch_size=128, loss_func=torch.nn.CrossEntropyLo
             # train your data...
             b_X = X[b:b + batch_size]
             b_y = y[b:b + batch_size]
-            output = net(b_X)  # rnn output
+            output = model(b_X)  # rnn output
             loss = loss_func(
                 output,
                 b_y.long().view(-1))  # cross entropy loss and y is not one-hotted
