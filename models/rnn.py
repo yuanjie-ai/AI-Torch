@@ -66,7 +66,7 @@ class BiLSTM(nn.Module):
  
 
 
-"""
+"""http://www.cnblogs.com/wangduo/p/6773601.html?utm_source=itdadao&utm_medium=referral
 遗忘层门： 
 作用对象：细胞状态 
 作用：将细胞状态中的信息选择性的遗忘 
