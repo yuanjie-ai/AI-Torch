@@ -49,19 +49,17 @@ class BiLSTM(nn.Module):
     def forward(self, x):
         embed = self.embed(x)
         x = embed.view(len(x), embed.size(1), -1)
-        # x shape (batch, time_step, input_size)
-        # r_out shape (batch, time_step, output_size)
-        # h_n shape (n_layers, batch, hidden_size)
-        # c_n shape (n_layers, batch, hidden_size)
+        # x/r_out shape (batch, time_step, input_size)
+        # h_n/c_n shape (n_layers, batch, hidden_size)
         r_out, (h_n, c_n) = self.bilstm(x)
         r_out = F.relu(r_out)
-
+        # r_out[:, -1, :].equal(h_n[-1, :, :])
+        y = self.fc1(r_out[:, -1, :])
+        y = self.fc2(y)
         # r_out = F.max_pool1d(r_out, r_out.size(2)).squeeze(2)
         # y = self.fc1(r_out)
         # y = self.fc2(y)
         # choose r_out at the last time step
-        y = self.fc1(r_out[:, -1, :])
-        y = self.fc2(y)
         return y
  
 
