@@ -45,7 +45,7 @@ class RNN(nn.Module):
             hidden_size=opt.rnn_hidden_size,
             dropout=opt.rnn_dropout,
             num_layers=opt.rnn_layers_num,
-            bidirectional=True,
+            bidirectional=opt.bidirectional,
             batch_first=True  # input/output shape (batch, time_step, input_size)
         )
         self.fc1 = nn.Linear(opt.rnn_hidden_size * opt.rnn_layers_num,
