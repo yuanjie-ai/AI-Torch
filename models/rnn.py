@@ -19,9 +19,9 @@ class Config(object):
     # RNN
     rnn_hidden_size = 128
     rnn_layers_num = 2
-    rnn_dropout = 0
     bidirectional = True
-
+    rnn_dropout = 0
+    
     # Linear
     fc_out_features = 128
     fc_dropout = 0
