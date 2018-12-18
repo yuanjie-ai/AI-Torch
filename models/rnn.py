@@ -13,17 +13,16 @@ class Config(object):
 
     # Embedding
     pretrained_embedding = None  # pretrained_weight
-    vocab_dim = 300
-    vocab_size = 10000
+    vocab_dim = 64
+    vocab_size = 1024
 
     # RNN
     rnn_hidden_size = 128
-    rnn_layers_num = 3
+    rnn_layers_num = 1
     bidirectional = True
     rnn_dropout = 0
     
     # Linear
-    fc_out_features = 128
     fc_dropout = 0
 
 
@@ -48,7 +47,7 @@ class RNN(nn.Module):
             bidirectional=opt.bidirectional,
             batch_first=True  # input/output shape (batch, time_step, input_size)
         )
-        __in_features = self.rnn.hidden_size * (2 if self.rnn.bidirectional else 1)
+        __in_features = self.rnn.hidden_size * (self.rnn.bidirectional + 1)
         self.fc1 = nn.Linear(__in_features,
                              __in_features // 2)
         self.fc2 = nn.Linear(self.fc1.out_features, opt.class_num)
