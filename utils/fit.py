@@ -12,6 +12,7 @@ def fit(model, X, y, epochs=5, batch_size=128, loss_func=torch.nn.CrossEntropyLo
     optimizer = torch.optim.Adam(model.parameters())
 
     for e in range(epochs):
+        # X, y = map(torch.LongTensor, shuffle(X.numpy(), y.numpy()))
         batchs = tqdm(range(0, X.size(0), batch_size))
         for b in batchs:  # for each training step
             # train your data...
