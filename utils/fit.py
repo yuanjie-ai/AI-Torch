@@ -17,11 +17,14 @@ def fit(model, X, y, epochs=5, batch_size=128, loss_func=torch.nn.CrossEntropyLo
             # train your data...
             b_X = X[b:b + batch_size]
             b_y = y[b:b + batch_size]
-            output = model(b_X)  # rnn output
-            loss = loss_func(output, b_y)  # cross entropy loss and y is not one-hotted
+            _y = model(b_X)  # rnn output
+            loss = loss_func(_y, b_y)  # cross entropy loss and y is not one-hotted
             optimizer.zero_grad()  # clear gradients for this training step
             loss.backward()  # backpropagation, compute gradients
             optimizer.step()
             if b % 50 == 0:
-                _ = train_desc(e, loss=loss, auc=auc(b_y.numpy(), output[:, 1].data.numpy()))
+                _ = train_desc(e, 
+                               loss=loss, 
+                               auc=auc(b_y.numpy(), _y[:, 1].data.numpy()),
+                               acc=(b_y==torch.max(_y, 1)[1]).sum().numpy()/len(_y))
                 batchs.set_description(_)
