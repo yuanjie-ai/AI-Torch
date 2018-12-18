@@ -1,19 +1,16 @@
+import torch
+from tqdm import tqdm
+from sklearn.metrics import roc_auc_score as auc
+
+def train_desc(epoch, **kw):
+    _ = ' ｜ '.join([f'{k.title()} = {v:.5f}' for k, v in kw.items()])
+    return f'Epoch {epoch+1: >2}: ' + _
+
 def fit(model, X, y, epochs=5, batch_size=128, loss_func=torch.nn.CrossEntropyLoss()):
-    """
-    :param model:
-    :param X: torch.FloatTensor
-    :param y: torch.LongTensor
-    :param epochs:
-    :param batch_size:
-    :param loss_func:
-    :param optimizer:
-    :return:
-    """
-    from tqdm import tqdm_notebook
-    from sklearn.metrics import roc_auc_score as auc
-    
+    assert isinstance(y, torch.LongTensor)
+
     optimizer = torch.optim.Adam(model.parameters())
-    
+
     for e in range(epochs):
         batchs = tqdm(range(0, X.size(0), batch_size))
         for b in batchs:  # for each training step
@@ -26,5 +23,5 @@ def fit(model, X, y, epochs=5, batch_size=128, loss_func=torch.nn.CrossEntropyLo
             loss.backward()  # backpropagation, compute gradients
             optimizer.step()
             if b % 50 == 0:
-                train_desc(e, loss=loss, auc=auc(b_y.numpy(), output.data.numpy()))
-                t.set_description()
+                _ = train_desc(e, loss=loss, auc=auc(b_y.numpy(), output[:, 1].data.numpy()))
+                batchs.set_description(_)
