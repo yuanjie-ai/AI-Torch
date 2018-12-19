@@ -48,6 +48,7 @@ class RNN(nn.Module):
             batch_first=True  # input/output shape (batch, time_step, input_size)
         )
         __in_features = self.rnn.hidden_size * (self.rnn.bidirectional + 1)
+        
         self.fc1 = nn.Linear(__in_features,
                              __in_features // 2)
         self.fc2 = nn.Linear(self.fc1.out_features, opt.class_num)
@@ -59,7 +60,7 @@ class RNN(nn.Module):
         # r_out[:, -1, :].equal(h_n[-1, :, :])
         r_out = F.relu(r_out)
         x = self.fc1(r_out[:, -1, :])  # choose r_out at the last time step
-        x = F.dropout(x, opt.fc_dropout)
+        x = F.dropout(x, opt.fc_dropout, training=self.training) # __init__: self.dropout = nn.Dropout(opt.fc_dropout)
         y = self.fc2(x)
         # r_out = F.max_pool1d(r_out, r_out.size(2)).squeeze(2)
         # y = self.fc1(r_out)
